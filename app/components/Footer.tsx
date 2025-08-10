@@ -4,9 +4,12 @@ import React from 'react';
 import Link from 'next/link';
 import { FaHeart, FaTwitter, FaFacebook, FaInstagram, FaTelegram, FaEnvelope, FaArrowRight } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { useI18n } from './I18nProvider';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { locale } = useI18n();
+  const p = `/${locale}`;
   
   return (
     <footer className="bg-gradient-to-b from-gray-50 to-gray-100 text-gray-800 relative overflow-hidden">
@@ -33,7 +36,7 @@ export default function Footer() {
                 className="w-full md:w-auto"
               >
                 <Link 
-                  href="/quiz" 
+                  href={`${p}/quiz`} 
                   className="inline-flex items-center justify-center w-full md:w-auto py-3 sm:py-4 px-6 sm:px-8 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-bold rounded-xl shadow-sm hover:shadow transition-all whitespace-nowrap"
                 >
                   Пройти тест
@@ -49,7 +52,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-12 sm:py-16 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
           <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="flex items-center group mb-4 sm:mb-6">
+            <Link href={`${p}`} className="flex items-center group mb-4 sm:mb-6">
               <div className="relative w-8 h-8 sm:w-10 sm:h-10 mr-2 sm:mr-3 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl"></div>
                 <div className="absolute inset-[3px] bg-white rounded-lg"></div>
@@ -103,7 +106,7 @@ export default function Footer() {
             <h3 className="text-lg font-bold text-gray-800 mb-6">Навигация</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/projects" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
+                <Link href={`${p}/projects`} className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
                   <span className="relative">
                     Проекты
                     <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
@@ -111,7 +114,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/quiz" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
+                <Link href={`${p}/quiz`} className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
                   <span className="relative">
                     Подобрать проект
                     <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
@@ -119,7 +122,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
+                <Link href={`${p}/about`} className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
                   <span className="relative">
                     О платформе
                     <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>

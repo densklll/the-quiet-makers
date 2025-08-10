@@ -1,29 +1,9 @@
-import React from 'react';
-import { getProjectById } from '@/lib/api';
-import ProjectDetailsClient from './ProjectDetailsClient';
+import { redirect } from 'next/navigation';
 
-// Моковые данные проектов для generateStaticParams
-const mockProjects = [
-  { id: '1' },
-  { id: '2' },
-  { id: '3' }
-];
-
-// Эта функция необходима для статической генерации страниц при использовании output: 'export'
 export function generateStaticParams() {
-  // Возвращаем массив объектов с параметрами для каждой страницы
-  return mockProjects.map((project) => ({
-    id: project.id,
-  }));
+  return [{ id: '1' }, { id: '2' }, { id: '3' }];
 }
 
-export default function ProjectDetails({ params }: { params: { id: string } }) {
-  // Получаем данные проекта по ID
-  const project = getProjectById(params.id);
-  
-  if (!project) {
-    return <div>Проект не найден</div>;
-  }
-  
-  return <ProjectDetailsClient project={project} />;
+export default function ProjectDetailsRedirect({ params }: { params: { id: string } }) {
+  redirect(`/en/project-details/${params.id}`);
 } 
