@@ -16,7 +16,7 @@ export default function HomePage() {
     <>
       <Header />
       
-      <main className="min-h-screen">
+      <main>
         {/* Hero Section */}
         <section className="relative bg-gradient-to-b from-gray-50 to-white pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-20 md:pb-32">
           <div className="absolute inset-0 overflow-hidden">

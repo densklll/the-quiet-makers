@@ -86,7 +86,7 @@ export default function FavoritesPage() {
       <Header />
       
       {/* Заголовок страницы */}
-      <section className="pt-32 pb-16 bg-gray-50">
+      <section className="pt-28 sm:pt-32 pb-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Избранное</h1>

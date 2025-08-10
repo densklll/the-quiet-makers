@@ -54,7 +54,7 @@ export default function Header() {
   const navItems = [
     { name: t('common.nav.about'), href: '/about' },
     { name: t('common.nav.how'), href: '/#how' },
-    { name: t('common.nav.contact'), href: '/#contact' },
+    { name: t('common.nav.contact'), href: '/contacts' },
   ];
 
   const handleToggleLocale = () => {
@@ -72,15 +72,15 @@ export default function Header() {
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between min-h-[56px]">
           {/* Логотип */}
-          <Link href="/" className="flex items-center group">
+          <Link href="/" className="flex items-center group min-w-0">
             <div className="relative w-10 h-10 mr-3 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl group-hover:shadow-md transition-all duration-300"></div>
               <div className="absolute inset-[3px] bg-white rounded-lg group-hover:inset-[2px] transition-all duration-300"></div>
               <div className="absolute inset-[6px] bg-gradient-to-br from-primary-500 to-secondary-500 rounded-md group-hover:inset-[5px] transition-all duration-300"></div>
             </div>
-            <span className={`font-bold text-xl tracking-tight transition-colors duration-300 ${
+            <span className={`font-bold text-xl tracking-tight transition-colors duration-300 truncate ${
               isScrolled || !isHomePage ? 'text-gray-800' : 'text-gray-800'
             } group-hover:text-primary-600`}>
               {t('common.brand')}
@@ -88,7 +88,7 @@ export default function Header() {
           </Link>
           
           {/* Навигация для десктопа */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
             {navItems.map((item, index) => {
               const isActive = pathname === item.href;
               
@@ -96,7 +96,7 @@ export default function Header() {
                 <Link 
                   key={index}
                   href={item.href} 
-                  className={`relative px-2 py-1 font-medium transition-all duration-300 ${
+                  className={`relative px-2 py-1 font-medium transition-all duration-300 text-sm lg:text-base whitespace-nowrap ${
                     isScrolled || !isHomePage 
                       ? isActive 
                         ? 'text-primary-600' 

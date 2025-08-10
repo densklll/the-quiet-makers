@@ -15,7 +15,7 @@ export default function AboutPage() {
     <>
       <Header />
       
-      <main className="overflow-hidden pt-20">
+      <main className="overflow-hidden pt-28 sm:pt-32">
         {/* Hero секция */}
         <section className="py-12 md:py-20 relative bg-gray-900">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -27,7 +27,7 @@ export default function AboutPage() {
                   transition={{ duration: 0.5 }}
                 >
                   <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                    {t('about.hero.title').split('доступной').join('<span class="text-primary-300">доступной</span>')}
+                    {t('about.hero.title')}
                   </h1>
                   <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 max-w-lg">
                     {t('about.hero.subtitle')}
