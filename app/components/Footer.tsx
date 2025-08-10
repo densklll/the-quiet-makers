@@ -14,8 +14,8 @@ export default function Footer() {
   return (
     <footer className="bg-gradient-to-b from-gray-50 to-gray-100 text-gray-800 relative overflow-hidden">
       {/* Декоративные элементы */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary-100 rounded-full -translate-y-1/2 translate-x-1/3 opacity-50 blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary-100 rounded-full translate-y-1/2 -translate-x-1/3 opacity-50 blur-3xl"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary-100 rounded-full -translate-y-1/2 translate-x-1/3 opacity-50 blur-3xl pointer-events-none" aria-hidden="true"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary-100 rounded-full translate-y-1/2 -translate-x-1/3 opacity-50 blur-3xl pointer-events-none" aria-hidden="true"></div>
       
       {/* Верхняя часть футера с CTA */}
       <div className="relative z-10 border-b border-gray-200">
@@ -71,6 +71,7 @@ export default function Footer() {
                 className="text-gray-400 hover:text-primary-600 transition-colors duration-300"
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
+                aria-label="Twitter"
               >
                 <FaTwitter size={20} />
               </motion.a>
@@ -79,6 +80,7 @@ export default function Footer() {
                 className="text-gray-400 hover:text-primary-600 transition-colors duration-300"
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
+                aria-label="Facebook"
               >
                 <FaFacebook size={20} />
               </motion.a>
@@ -88,6 +90,7 @@ export default function Footer() {
                 className="text-gray-400 hover:text-primary-600 transition-colors duration-300"
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
+                aria-label="Instagram"
               >
                 <FaInstagram size={20} />
               </motion.a>
@@ -96,6 +99,7 @@ export default function Footer() {
                 className="text-gray-400 hover:text-primary-600 transition-colors duration-300"
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
+                aria-label="Telegram"
               >
                 <FaTelegram size={20} />
               </motion.a>
@@ -105,6 +109,7 @@ export default function Footer() {
                 className="text-gray-400 hover:text-primary-600 transition-colors duration-300"
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
+                aria-label="TikTok"
               >
                 <FaTiktok size={20} />
               </motion.a>
@@ -138,6 +143,14 @@ export default function Footer() {
                   </span>
                 </Link>
               </li>
+              <li>
+                <Link href="/contacts" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
+                  <span className="relative">
+                    {t('common.nav.contact')}
+                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
+                  </span>
+                </Link>
+              </li>
             </ul>
           </div>
           
@@ -156,7 +169,7 @@ export default function Footer() {
                 <Link href="#" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
                   <span className="relative">
                     {t('footer.nav.privacy')}
-                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
+                    <span className="absolute left-0 bottom-0 w-0.5 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
                   </span>
                 </Link>
               </li>
@@ -171,23 +184,23 @@ export default function Footer() {
             </ul>
           </div>
           
-          <div id="contact">
+          <div>
             <h3 className="text-lg font-bold text-gray-800 mb-6">{t('common.labels.contactUs')}</h3>
             <div className="space-y-4">
               <a href="mailto:info@quietmakers.org" className="flex items-center text-gray-600 hover:text-primary-600 transition-colors duration-300 group">
                 <div className="bg-gray-100 p-2 rounded-full mr-3 group-hover:bg-primary-50 transition-colors duration-300">
                   <FaEnvelope className="text-gray-500 group-hover:text-primary-600 transition-colors duration-300" />
                 </div>
-                <span>info@quietmakers.org</span>
+                <span className="truncate">info@quietmakers.org</span>
               </a>
               <p className="text-gray-600 flex items-center">
                 <span className="bg-gray-100 p-2 rounded-full mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </span>
-                {t('common.labels.moscowRussia')}
+                <span className="whitespace-normal">{t('common.labels.moscowRussia')}</span>
               </p>
             </div>
           </div>

@@ -20,9 +20,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <I18nProvider initialLocale="en">
-          <main className="min-h-screen">
-            {children}
-          </main>
+          <div className="min-h-screen flex flex-col">
+            <main className="flex-1">
+              {children}
+            </main>
+          </div>
         </I18nProvider>
       </body>
     </html>

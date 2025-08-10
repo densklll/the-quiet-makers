@@ -111,7 +111,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
     <>
       <Header />
       
-      <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-20 md:pb-32">
+      <main className="bg-gradient-to-b from-gray-50 to-white pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-20 md:pb-32">
         <div className="max-w-6xl mx-auto px-4">
           {/* Заголовок страницы */}
           <div className="mb-10 sm:mb-16 text-center">

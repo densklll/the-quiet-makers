@@ -61,7 +61,7 @@ export default function ProjectDetailsClient({ project }: { project: Project }) 
     <>
       <Header />
       
-      <main className="container mx-auto px-4 py-24">
+      <main className="container mx-auto px-4 pt-28 sm:pt-32 pb-16">
         <div className="max-w-4xl mx-auto">
           {/* Хлебные крошки */}
           <div className="mb-6">

@@ -29,6 +29,7 @@ body {
     );
   background-attachment: fixed;
   min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 @layer base {
@@ -161,6 +162,20 @@ body {
   
   .nav-link.active {
     @apply text-primary-500 font-semibold;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .truncate-1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 

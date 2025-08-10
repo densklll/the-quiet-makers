@@ -140,7 +140,7 @@ export default function QuizPage() {
     <>
       <Header />
       
-      <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-20">
+      <main className="bg-gradient-to-b from-gray-50 to-white pt-28 sm:pt-32 pb-16">
         <div className="max-w-3xl mx-auto px-4">
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-600 mb-4">

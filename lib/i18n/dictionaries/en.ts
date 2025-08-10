@@ -310,6 +310,14 @@ const en = {
     remove: "Remove from favorites",
     add: "Add to favorites",
   },
+  contacts: {
+    title: "Contact us",
+    subtitle: "We're always available — choose a convenient way",
+    emailUs: "Email us",
+    socials: "We are on social networks",
+    formCta: "Fill out the form",
+    email: "Email",
+  },
   projectsData: {
     // English translations for mock project data (by id)
     "1": {
