@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: process.env.NODE_ENV === 'production' ? '/the-quiet-makers' : '',
+  basePath: '/the-quiet-makers',
   images: {
     remotePatterns: [
       {
@@ -18,7 +18,7 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     unoptimized: true,
   },
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/the-quiet-makers' : '',
+  assetPrefix: '/the-quiet-makers',
 };
 
 module.exports = nextConfig; 
