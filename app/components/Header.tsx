@@ -6,11 +6,13 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FaBars, FaTimes, FaUser, FaHeart, FaChevronDown } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useI18n } from '@/lib/i18n/I18nContext';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const { t, locale, setLocale } = useI18n();
   
   // Определяем, находимся ли мы на главной странице
   const isHomePage = pathname === '/';
@@ -49,6 +51,16 @@ export default function Header() {
     }
   };
   
+  const navItems = [
+    { name: t('common.nav.projects'), href: '/projects' },
+    { name: t('common.nav.quiz'), href: '/quiz' },
+    { name: t('common.nav.about'), href: '/about' }
+  ];
+
+  const handleToggleLocale = () => {
+    setLocale(locale === 'en' ? 'ru' : 'en');
+  };
+  
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -71,17 +83,13 @@ export default function Header() {
             <span className={`font-bold text-xl tracking-tight transition-colors duration-300 ${
               isScrolled || !isHomePage ? 'text-gray-800' : 'text-gray-800'
             } group-hover:text-primary-600`}>
-              The Quiet Makers
+              {t('common.brand')}
             </span>
           </Link>
           
           {/* Навигация для десктопа */}
           <nav className="hidden md:flex items-center space-x-8">
-            {[
-              { name: 'Проекты', href: '/projects' },
-              { name: 'Подобрать проект', href: '/quiz' },
-              { name: 'О платформе', href: '/about' }
-            ].map((item, index) => {
+            {navItems.map((item, index) => {
               const isActive = pathname === item.href;
               
               return (
@@ -107,7 +115,7 @@ export default function Header() {
             })}
           </nav>
           
-          {/* Кнопки авторизации для десктопа */}
+          {/* Кнопки авторизации и переключатель языка для десктопа */}
           <div className="hidden md:flex items-center space-x-4">
             <Link 
               href="/favorites" 
@@ -116,7 +124,7 @@ export default function Header() {
                   ? 'text-gray-600 hover:text-primary-500 hover:bg-primary-50' 
                   : 'text-gray-600 hover:text-primary-500 hover:bg-primary-50'
               }`}
-              aria-label="Избранное"
+              aria-label={t('header.aria.favorites')}
             >
               <FaHeart className="transform hover:scale-110 transition-transform duration-300" />
             </Link>
@@ -128,21 +136,31 @@ export default function Header() {
                   : 'text-primary-600 hover:bg-primary-50'
               }`}
             >
-              Войти
+              {t('common.actions.login')}
             </Link>
             <Link 
               href="/register" 
               className="py-2 px-4 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-medium rounded-lg shadow-sm hover:shadow transition-all duration-300"
             >
-              Регистрация
+              {t('common.actions.register')}
             </Link>
+            {/* Переключатель языка */}
+            <div className="ml-2">
+              <button
+                onClick={handleToggleLocale}
+                className="py-2 px-3 border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                aria-label="Switch language"
+              >
+                {locale === 'en' ? 'EN' : 'RU'}
+              </button>
+            </div>
           </div>
           
           {/* Кнопка мобильного меню */}
           <motion.button 
             className="md:hidden p-2 rounded-lg"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
+            aria-label={isMenuOpen ? t('header.aria.closeMenu') : t('header.aria.openMenu')}
             whileTap={{ scale: 0.9 }}
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -176,11 +194,7 @@ export default function Header() {
           >
             <div className="container mx-auto px-4 py-6">
               <nav className="flex flex-col space-y-5">
-                {[
-                  { name: 'Проекты', href: '/projects' },
-                  { name: 'Подобрать проект', href: '/quiz' },
-                  { name: 'О платформе', href: '/about' }
-                ].map((item, index) => {
+                {navItems.map((item, index) => {
                   const isActive = pathname === item.href;
                   
                   return (
@@ -213,7 +227,7 @@ export default function Header() {
                     className="text-gray-700 hover:text-primary-600 font-medium flex items-center transition-colors duration-300"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <FaHeart className="mr-3 text-primary-500" /> Избранное
+                    <FaHeart className="mr-3 text-primary-500" /> {t('common.labels.favorites')}
                   </Link>
                   <div className="flex flex-col space-y-3 pt-2">
                     <Link 
@@ -221,15 +235,22 @@ export default function Header() {
                       className="py-3 px-4 text-center border border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50 font-medium rounded-xl transition-all duration-300"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      Войти
+                      {t('common.actions.login')}
                     </Link>
                     <Link 
                       href="/register" 
                       className="py-3 px-4 text-center bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-medium rounded-xl shadow-sm hover:shadow transition-all duration-300"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      Регистрация
+                      {t('common.actions.register')}
                     </Link>
+                    {/* Переключатель языка (моб.) */}
+                    <button
+                      onClick={() => { handleToggleLocale(); setIsMenuOpen(false); }}
+                      className="py-3 px-4 text-center border border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50 font-medium rounded-xl transition-all duration-300"
+                    >
+                      {locale === 'en' ? 'EN' : 'RU'}
+                    </button>
                   </div>
                 </motion.div>
               </nav>

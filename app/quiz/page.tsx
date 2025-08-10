@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaHandHoldingHeart, FaUsers, FaLeaf, FaPaw, FaHeartbeat, FaShieldAlt, FaMoneyBillWave, FaRegClock, FaRegLightbulb, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useI18n } from '@/lib/i18n/I18nContext';
 
 // Типы вопросов и ответов
 interface QuizOption {
@@ -21,72 +22,70 @@ interface QuizQuestionType {
   options: QuizOption[];
 }
 
-// Вопросы для квиза
-const quizQuestions: QuizQuestionType[] = [
-  {
-    id: 'category',
-    question: 'В какой сфере вы хотите оказать помощь?',
-    options: [
-      { id: 'people', text: 'Люди: поддержка социально уязвимых групп.', icon: <FaUsers className="text-blue-500" />, value: 'people' },
-      { id: 'animals', text: 'Животные: защита и уход за бездомными или редкими видами.', icon: <FaPaw className="text-amber-500" />, value: 'animals' },
-      { id: 'nature', text: 'Природа: сохранение экосистем и борьба с загрязнением.', icon: <FaLeaf className="text-green-500" />, value: 'nature' }
-    ]
-  },
-  {
-    id: 'goal',
-    question: 'Какая цель для вас наиболее приоритетна?',
-    options: [
-      { id: 'education', text: 'Улучшение условий жизни и образования.', icon: <FaRegLightbulb className="text-yellow-500" />, value: 'education' },
-      { id: 'health', text: 'Решение вопросов здоровья и безопасности.', icon: <FaHeartbeat className="text-pink-500" />, value: 'health' },
-      { id: 'environment', text: 'Восстановление и защита окружающей среды.', icon: <FaLeaf className="text-green-500" />, value: 'environment' }
-    ]
-  },
-  {
-    id: 'format',
-    question: 'Какой формат поддержки вам удобнее?',
-    options: [
-      { id: 'one-time', text: 'Разовая финансовая помощь.', icon: <FaMoneyBillWave className="text-green-500" />, value: 'one-time' },
-      { id: 'recurring', text: 'Регулярная поддержка выбранного проекта.', icon: <FaRegClock className="text-blue-500" />, value: 'recurring' }
-    ]
-  },
-  {
-    id: 'result',
-    question: 'Какой результат вы хотите видеть от своего вклада?',
-    options: [
-      { id: 'concrete', text: 'Конкретные и измеримые результаты.', icon: <FaRegLightbulb className="text-yellow-500" />, value: 'concrete' },
-      { id: 'general', text: 'Общий вклад в улучшение выбранной сферы.', icon: <FaHandHoldingHeart className="text-purple-500" />, value: 'general' }
-    ]
-  },
-  {
-    id: 'project_type',
-    question: 'Какие проекты вы считаете наиболее важными?',
-    options: [
-      { id: 'animal_help', text: 'Помощь животным: вакцинация, уход, приюты.', icon: <FaPaw className="text-amber-500" />, value: 'animal_help' },
-      { id: 'education_support', text: 'Поддержка образования: строительство школ, доступ к обучению.', icon: <FaRegLightbulb className="text-blue-500" />, value: 'education_support' },
-      { id: 'eco_initiatives', text: 'Экологические инициативы: очистка территорий, посадка деревьев.', icon: <FaLeaf className="text-green-500" />, value: 'eco_initiatives' }
-    ]
-  }
-];
-
 export default function QuizPage() {
   const router = useRouter();
+  const { t } = useI18n();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   
-  const currentQuestion = quizQuestions[currentQuestionIndex];
+  // Вопросы строим из словаря
+  const quizQuestions: QuizQuestionType[] = [
+    {
+      id: 'category',
+      question: t('quiz.q.category.question'),
+      options: [
+        { id: 'people', text: t('quiz.q.category.people'), icon: <FaUsers className="text-blue-500" />, value: 'people' },
+        { id: 'animals', text: t('quiz.q.category.animals'), icon: <FaPaw className="text-amber-500" />, value: 'animals' },
+        { id: 'nature', text: t('quiz.q.category.nature'), icon: <FaLeaf className="text-green-500" />, value: 'nature' }
+      ]
+    },
+    {
+      id: 'goal',
+      question: t('quiz.q.goal.question'),
+      options: [
+        { id: 'education', text: t('quiz.q.goal.education'), icon: <FaRegLightbulb className="text-yellow-500" />, value: 'education' },
+        { id: 'health', text: t('quiz.q.goal.health'), icon: <FaHeartbeat className="text-pink-500" />, value: 'health' },
+        { id: 'environment', text: t('quiz.q.goal.environment'), icon: <FaLeaf className="text-green-500" />, value: 'environment' }
+      ]
+    },
+    {
+      id: 'format',
+      question: t('quiz.q.format.question'),
+      options: [
+        { id: 'one-time', text: t('quiz.q.format.oneTime'), icon: <FaMoneyBillWave className="text-green-500" />, value: 'one-time' },
+        { id: 'recurring', text: t('quiz.q.format.recurring'), icon: <FaRegClock className="text-blue-500" />, value: 'recurring' }
+      ]
+    },
+    {
+      id: 'result',
+      question: t('quiz.q.result.question'),
+      options: [
+        { id: 'concrete', text: t('quiz.q.result.concrete'), icon: <FaRegLightbulb className="text-yellow-500" />, value: 'concrete' },
+        { id: 'general', text: t('quiz.q.result.general'), icon: <FaHandHoldingHeart className="text-purple-500" />, value: 'general' }
+      ]
+    },
+    {
+      id: 'project_type',
+      question: t('quiz.q.projectType.question'),
+      options: [
+        { id: 'animal_help', text: t('quiz.q.projectType.animal_help'), icon: <FaPaw className="text-amber-500" />, value: 'animal_help' },
+        { id: 'education_support', text: t('quiz.q.projectType.education_support'), icon: <FaRegLightbulb className="text-blue-500" />, value: 'education_support' },
+        { id: 'eco_initiatives', text: t('quiz.q.projectType.eco_initiatives'), icon: <FaLeaf className="text-green-500" />, value: 'eco_initiatives' }
+      ]
+    }
+  ];
+
   const totalQuestions = quizQuestions.length;
+  const currentQuestion = quizQuestions[currentQuestionIndex];
   const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
   
-  // Обработчик выбора варианта ответа
   const handleOptionSelect = (optionId: string) => {
     setSelectedOption(optionId);
   };
   
-  // Обработчик перехода к следующему вопросу
   const handleNextQuestion = () => {
     if (selectedOption) {
-      // Сохраняем ответ
       const questionId = currentQuestion.id;
       const optionValue = currentQuestion.options.find(opt => opt.id === selectedOption)?.value || '';
       
@@ -99,7 +98,6 @@ export default function QuizPage() {
         return newAnswers;
       });
       
-      // Переходим к следующему вопросу или завершаем квиз
       if (currentQuestionIndex < totalQuestions - 1) {
         setCurrentQuestionIndex(prev => prev + 1);
         setSelectedOption(null);
@@ -109,7 +107,6 @@ export default function QuizPage() {
     }
   };
   
-  // Обработчик перехода к предыдущему вопросу
   const handlePrevQuestion = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prev => prev - 1);
@@ -117,33 +114,25 @@ export default function QuizPage() {
     }
   };
   
-  // Обработчик завершения квиза
   const handleQuizComplete = () => {
-    // Формируем URL с параметрами для страницы проектов
     const queryParams = new URLSearchParams();
     queryParams.append('quiz', 'true');
     
     if (answers.category) {
       queryParams.append('categories', answers.category.join(','));
     }
-    
     if (answers.goal) {
       queryParams.append('goals', answers.goal.join(','));
     }
-    
     if (answers.format) {
       queryParams.append('format', answers.format.join(','));
     }
-    
     if (answers.result) {
       queryParams.append('results', answers.result.join(','));
     }
-    
     if (answers.project_type) {
       queryParams.append('project_types', answers.project_type.join(','));
     }
-    
-    // Переходим на страницу проектов с результатами
     router.push(`/projects?${queryParams.toString()}`);
   };
   
@@ -155,18 +144,18 @@ export default function QuizPage() {
         <div className="max-w-3xl mx-auto px-4">
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-600 mb-4">
-              Найди проект, который тебя вдохновит
+              {t('quiz.title')}
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Ответь на несколько вопросов, и мы подберём для тебя проекты, которые важны именно тебе.
+              {t('quiz.subtitle')}
             </p>
           </div>
           
           {/* Прогресс-бар */}
           <div className="mb-10">
             <div className="flex justify-between text-sm text-gray-500 mb-2">
-              <span>Вопрос {currentQuestionIndex + 1} из {totalQuestions}</span>
-              <span>{Math.round(progress)}%</span>
+              <span>{t('quiz.questionOf', { n: String(currentQuestionIndex + 1), total: String(totalQuestions) })}</span>
+              <span>{t('quiz.progress', { percent: String(Math.round(progress)) })}</span>
             </div>
             <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
               <motion.div 
@@ -197,7 +186,7 @@ export default function QuizPage() {
                   {currentQuestion.options.map((option) => (
                     <motion.button
                       key={option.id}
-                      onClick={() => handleOptionSelect(option.id)}
+                      onClick={() => setSelectedOption(option.id)}
                       className={`w-full flex items-center p-5 rounded-xl border-2 transition-all duration-300 ${
                         selectedOption === option.id
                           ? 'border-primary-500 bg-primary-50 shadow-md shadow-primary-100'
@@ -237,7 +226,7 @@ export default function QuizPage() {
               whileTap={currentQuestionIndex !== 0 ? { scale: 0.97 } : {}}
             >
               <FaArrowLeft className="mr-2" />
-              Назад
+              {t('common.actions.back')}
             </motion.button>
             
             <motion.button
@@ -253,11 +242,11 @@ export default function QuizPage() {
             >
               {currentQuestionIndex < totalQuestions - 1 ? (
                 <>
-                  Далее
+                  {t('common.actions.next')}
                   <FaArrowRight className="ml-2" />
                 </>
               ) : (
-                'Показать подходящие проекты'
+                t('quiz.btnShowResults')
               )}
             </motion.button>
           </div>
