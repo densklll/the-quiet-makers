@@ -4,50 +4,42 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { FaBars, FaTimes, FaUser, FaHeart, FaChevronDown } from 'react-icons/fa';
+import { FaBars, FaTimes, FaUser, FaHeart } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useI18n } from './I18nProvider';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const { t } = useI18n();
   
-  // Определяем, находимся ли мы на главной странице
-  const isHomePage = pathname === '/';
+  const isHomePage = pathname === '/' || pathname?.match(/^\/(en|ru)\/?$/);
   
-  // Отслеживание скролла для изменения стиля хедера
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
+      if (typeof window !== 'undefined' && window.scrollY > 10) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
       }
     };
-    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Варианты анимации для мобильного меню
   const menuVariants = {
-    closed: {
-      opacity: 0,
-      height: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut"
-      }
-    },
-    open: {
-      opacity: 1,
-      height: "auto",
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut"
-      }
-    }
-  };
+    closed: { opacity: 0, height: 0, transition: { duration: 0.3, ease: 'easeInOut' } },
+    open: { opacity: 1, height: 'auto', transition: { duration: 0.3, ease: 'easeInOut' } },
+  } as const;
+  
+  const navItems = [
+    { name: t.common.nav.projects, href: '/projects' },
+    { name: t.common.nav.quiz, href: '/quiz' },
+    { name: t.common.nav.about, href: '/about' },
+  ];
+  const localePrefix = `/${t ? (useI18n().locale) : 'en'}`;
   
   return (
     <header 
@@ -61,8 +53,7 @@ export default function Header() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          {/* Логотип */}
-          <Link href="/" className="flex items-center group">
+          <Link href={`${localePrefix}`} className="flex items-center group">
             <div className="relative w-10 h-10 mr-3 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl group-hover:shadow-md transition-all duration-300"></div>
               <div className="absolute inset-[3px] bg-white rounded-lg group-hover:inset-[2px] transition-all duration-300"></div>
@@ -71,23 +62,17 @@ export default function Header() {
             <span className={`font-bold text-xl tracking-tight transition-colors duration-300 ${
               isScrolled || !isHomePage ? 'text-gray-800' : 'text-gray-800'
             } group-hover:text-primary-600`}>
-              The Quiet Makers
+              {t.common.appName}
             </span>
           </Link>
           
-          {/* Навигация для десктопа */}
           <nav className="hidden md:flex items-center space-x-8">
-            {[
-              { name: 'Проекты', href: '/projects' },
-              { name: 'Подобрать проект', href: '/quiz' },
-              { name: 'О платформе', href: '/about' }
-            ].map((item, index) => {
-              const isActive = pathname === item.href;
-              
+            {navItems.map((item, index) => {
+              const isActive = pathname === item.href || pathname?.endsWith(item.href);
               return (
                 <Link 
                   key={index}
-                  href={item.href} 
+                  href={`${localePrefix}${item.href}`}
                   className={`relative px-2 py-1 font-medium transition-all duration-300 ${
                     isScrolled || !isHomePage 
                       ? isActive 
@@ -107,42 +92,41 @@ export default function Header() {
             })}
           </nav>
           
-          {/* Кнопки авторизации для десктопа */}
           <div className="hidden md:flex items-center space-x-4">
             <Link 
-              href="/favorites" 
+              href={`${localePrefix}/favorites`} 
               className={`p-2 rounded-full transition-all duration-300 ${
                 isScrolled || !isHomePage
                   ? 'text-gray-600 hover:text-primary-500 hover:bg-primary-50' 
                   : 'text-gray-600 hover:text-primary-500 hover:bg-primary-50'
               }`}
-              aria-label="Избранное"
+              aria-label={t.common.nav.favorites}
             >
               <FaHeart className="transform hover:scale-110 transition-transform duration-300" />
             </Link>
+            <LanguageSwitcher />
             <Link 
-              href="/login" 
+              href={`${localePrefix}/login`} 
               className={`py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
                 isScrolled || !isHomePage
                   ? 'text-primary-600 hover:bg-primary-50' 
                   : 'text-primary-600 hover:bg-primary-50'
               }`}
             >
-              Войти
+              {t.common.auth.login}
             </Link>
             <Link 
-              href="/register" 
+              href={`${localePrefix}/register`} 
               className="py-2 px-4 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-medium rounded-lg shadow-sm hover:shadow transition-all duration-300"
             >
-              Регистрация
+              {t.common.auth.register}
             </Link>
           </div>
           
-          {/* Кнопка мобильного меню */}
           <motion.button 
             className="md:hidden p-2 rounded-lg"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             whileTap={{ scale: 0.9 }}
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -164,7 +148,6 @@ export default function Header() {
         </div>
       </div>
       
-      {/* Мобильное меню */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div 
@@ -176,22 +159,12 @@ export default function Header() {
           >
             <div className="container mx-auto px-4 py-6">
               <nav className="flex flex-col space-y-5">
-                {[
-                  { name: 'Проекты', href: '/projects' },
-                  { name: 'Подобрать проект', href: '/quiz' },
-                  { name: 'О платформе', href: '/about' }
-                ].map((item, index) => {
-                  const isActive = pathname === item.href;
-                  
+                {navItems.map((item, index) => {
+                  const isActive = pathname === item.href || pathname?.endsWith(item.href);
                   return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
+                    <motion.div key={index} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.1 }}>
                       <Link 
-                        href={item.href} 
+                        href={`${localePrefix}${item.href}`} 
                         className={`text-lg font-medium block transition-colors duration-300 ${
                           isActive ? 'text-primary-600' : 'text-gray-700 hover:text-primary-600'
                         }`}
@@ -209,26 +182,30 @@ export default function Header() {
                   transition={{ delay: 0.3 }}
                 >
                   <Link 
-                    href="/favorites" 
+                    href={`${localePrefix}/favorites`} 
                     className="text-gray-700 hover:text-primary-600 font-medium flex items-center transition-colors duration-300"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <FaHeart className="mr-3 text-primary-500" /> Избранное
+                    <FaHeart className="mr-3 text-primary-500" /> {t.common.nav.favorites}
                   </Link>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-600">{t.common.misc.language}:</span>
+                    <LanguageSwitcher />
+                  </div>
                   <div className="flex flex-col space-y-3 pt-2">
                     <Link 
-                      href="/login" 
+                      href={`${localePrefix}/login`} 
                       className="py-3 px-4 text-center border border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50 font-medium rounded-xl transition-all duration-300"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      Войти
+                      {t.common.auth.login}
                     </Link>
                     <Link 
-                      href="/register" 
+                      href={`${localePrefix}/register`} 
                       className="py-3 px-4 text-center bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-medium rounded-xl shadow-sm hover:shadow transition-all duration-300"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      Регистрация
+                      {t.common.auth.register}
                     </Link>
                   </div>
                 </motion.div>

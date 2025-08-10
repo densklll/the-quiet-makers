@@ -1,52 +1,21 @@
 # The Quiet Makers
 
-Платформа, которая помогает людям находить благотворительные проекты, соответствующие их ценностям и интересам. Мы соединяем добрые сердца с теми, кто нуждается в помощи.
+This project uses Next.js 14 with the App Router and Tailwind CSS.
 
-## О проекте
+## Localization (i18n)
 
-The Quiet Makers - это платформа для поиска и поддержки благотворительных проектов. Наша миссия - помочь людям найти проекты, которые резонируют с их ценностями и интересами, и сделать процесс благотворительности более персонализированным и эмоционально значимым.
+- The site is available in two languages: English (default) and Russian
+- Locale-prefixed routes are used: `/en/...` and `/ru/...`
+- The root path `/` redirects to `/en`
+- A language switcher is shown in the top-right of the header and preserves the current path when switching
 
-## Функциональность
+## Development
 
-- **Эмоциональный тест** для подбора проектов, соответствующих вашим ценностям
-- **Каталог благотворительных проектов** с возможностью фильтрации
-- **Детальные страницы проектов** с информацией о целях, прогрессе и способах поддержки
-- **Личный кабинет** для отслеживания поддержанных проектов
-
-## Технологии
-
-- Next.js 14
-- React
-- TypeScript
-- Tailwind CSS
-- Framer Motion
-
-## Установка и запуск
+- Install dependencies and run dev server:
 
 ```bash
-# Клонирование репозитория
-git clone https://github.com/develden/the-quiet-makers.git
-cd the-quiet-makers
-
-# Установка зависимостей
 npm install
-
-# Запуск сервера разработки
 npm run dev
 ```
 
-Откройте [http://localhost:3000](http://localhost:3000) в вашем браузере, чтобы увидеть результат.
-
-## Структура проекта
-
-- `/app` - Основные страницы и компоненты приложения
-- `/public` - Статические файлы (изображения, иконки)
-- `/lib` - Вспомогательные функции и утилиты
-
-## Вклад в проект
-
-Мы приветствуем вклад в развитие проекта! Если у вас есть идеи или предложения, пожалуйста, создайте issue или pull request.
-
-## Лицензия
-
-MIT 
+The app is served under the base path `/the-quiet-makers`. 
