@@ -12,7 +12,7 @@ export default function InterviewsPage() {
     <main>
       <Header />
       
-      <section className="py-12 bg-gray-50">
+      <section className="pt-36 md:pt-40 pb-12 bg-gray-50">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-800 mb-4">Интервью с экспертами</h1>

@@ -331,3 +331,33 @@ body {
     @apply text-sm;
   }
 } 
+
+/* Улучшение переноса длинных слов и кириллицы */
+.prose, p, h1, h2, h3, h4, h5, h6, .mobile-text-balance, .text-balance {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* Плавная прокрутка и отступ для фиксированного хедера */
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --header-offset: 72px;
+}
+
+[id] {
+  scroll-margin-top: var(--header-offset);
+}
+
+/* Обёртки секций, чтобы футер не расширялся из-за переполнений */
+section {
+  min-width: 0;
+}
+
+/* Утилита для запрета переноса и выравнивания меню */
+.nav-nowrap {
+  white-space: nowrap;
+} 

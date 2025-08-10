@@ -90,7 +90,7 @@ export default function ProjectSelectionPage() {
     <>
       <Header />
       
-      <section className="pt-32 pb-12 bg-gray-50 min-h-screen">
+      <section className="pt-36 md:pt-40 pb-12 bg-gray-50 min-h-screen">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
             <div className="mb-8 text-center">

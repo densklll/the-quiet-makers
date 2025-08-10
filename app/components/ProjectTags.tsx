@@ -102,7 +102,7 @@ export default function ProjectTags({ onTagSelect, selectedTags = [], showTitle 
                 {tag.icon}
               </motion.div>
               
-              <span className={`text-sm font-medium ${isSelected ? 'text-primary-700' : 'text-gray-700'}`}>{tag.label}</span>
+              <span className={`text-sm font-medium text-center mobile-text-balance ${isSelected ? 'text-primary-700' : 'text-gray-700'}`}>{tag.label}</span>
               
               {isSelected && (
                 <motion.div 

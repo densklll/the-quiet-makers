@@ -27,7 +27,19 @@ export default function AboutPage() {
                   transition={{ duration: 0.5 }}
                 >
                   <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                    {t('about.hero.title').split('доступной').join('<span class="text-primary-300">доступной</span>')}
+                    {(() => {
+                      const title = t('about.hero.title');
+                      const highlight = 'доступной';
+                      const parts = title.split(highlight);
+                      if (parts.length === 2) {
+                        return (
+                          <>
+                            {parts[0]}<span className="text-primary-300">{highlight}</span>{parts[1]}
+                          </>
+                        );
+                      }
+                      return title;
+                    })()}
                   </h1>
                   <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 max-w-lg">
                     {t('about.hero.subtitle')}

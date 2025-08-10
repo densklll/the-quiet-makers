@@ -19,14 +19,14 @@ export default function Footer() {
       
       {/* Верхняя часть футера с CTA */}
       <div className="relative z-10 border-b border-gray-200">
-        <div className="container mx-auto px-4 py-12 sm:py-16">
+        <div className="container mx-auto px-4 py-12 sm:py-16 min-w-0">
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 md:p-12">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
               <div className="max-w-2xl">
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-3 sm:mb-4 mobile-text-balance">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-3 sm:mb-4 mobile-text-balance text-balance">
                   {t('footer.ctaTitle')}
                 </h2>
-                <p className="text-sm sm:text-base text-gray-600 mb-0 md:pr-8 mobile-text-balance">
+                <p className="text-sm sm:text-base text-gray-600 mb-0 md:pr-8 mobile-text-balance text-balance">
                   {t('footer.ctaText')}
                 </p>
               </div>
@@ -43,13 +43,26 @@ export default function Footer() {
                   <FaArrowRight className="ml-2" />
                 </Link>
               </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full md:w-auto"
+              >
+                <Link 
+                  href="/contact" 
+                  className="inline-flex items-center justify-center w-full md:w-auto py-3 sm:py-4 px-6 sm:px-8 bg-white text-gray-700 font-bold rounded-xl border border-gray-200 hover:border-gray-300 hover:bg-gray-50 shadow-sm hover:shadow transition-all whitespace-nowrap"
+                >
+                  {t('common.nav.contact')}
+                  <FaArrowRight className="ml-2" />
+                </Link>
+              </motion.div>
             </div>
           </div>
         </div>
       </div>
       
       {/* Основная часть футера */}
-      <div className="container mx-auto px-4 py-12 sm:py-16 relative z-10">
+      <div className="container mx-auto px-4 py-12 sm:py-16 relative z-10 min-w-0">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
           <div className="col-span-1 sm:col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center group mb-4 sm:mb-6">
@@ -92,7 +105,8 @@ export default function Footer() {
                 <FaInstagram size={20} />
               </motion.a>
               <motion.a 
-                href="#" 
+                href="https://t.me/quietmakers" 
+                target="_blank" rel="noopener noreferrer"
                 className="text-gray-400 hover:text-primary-600 transition-colors duration-300"
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
@@ -138,6 +152,14 @@ export default function Footer() {
                   </span>
                 </Link>
               </li>
+              <li>
+                <Link href="/contact" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
+                  <span className="relative">
+                    {t('common.nav.contact')}
+                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
+                  </span>
+                </Link>
+              </li>
             </ul>
           </div>
           
@@ -171,7 +193,7 @@ export default function Footer() {
             </ul>
           </div>
           
-          <div id="contact">
+          <div>
             <h3 className="text-lg font-bold text-gray-800 mb-6">{t('common.labels.contactUs')}</h3>
             <div className="space-y-4">
               <a href="mailto:info@quietmakers.org" className="flex items-center text-gray-600 hover:text-primary-600 transition-colors duration-300 group">

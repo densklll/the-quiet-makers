@@ -1,6 +1,7 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -12,13 +13,27 @@ import { useI18n } from '@/lib/i18n/I18nContext';
 
 export default function HomePage() {
   const { t } = useI18n();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (window.location.hash === '#how') {
+      // чуть подождём, чтобы разметка точно была готова
+      setTimeout(() => {
+        const el = document.getElementById('how');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 0);
+    }
+  }, [pathname]);
   return (
     <>
       <Header />
       
       <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-b from-gray-50 to-white pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-20 md:pb-32">
+        <section className="relative bg-gradient-to-b from-gray-50 to-white pt-32 sm:pt-36 md:pt-40 pb-16 sm:pb-20 md:pb-32">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary-100 rounded-full opacity-30 blur-3xl"></div>
             <div className="absolute top-60 -left-20 w-72 h-72 bg-secondary-100 rounded-full opacity-30 blur-3xl"></div>

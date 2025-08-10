@@ -87,11 +87,11 @@ export default function ProjectCard({
         </div>
         
         <div className="project-card-content">
-          <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-primary-600 transition-colors duration-300">
+          <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-primary-600 transition-colors duration-300 text-balance">
             {title}
           </h3>
           
-          <p className="text-gray-600 mb-4 line-clamp-3 text-sm">
+          <p className="text-gray-600 mb-4 line-clamp-3 text-sm mobile-text-balance">
             {description}
           </p>
           

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { FaBars, FaTimes, FaUser, FaHeart, FaChevronDown } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useI18n } from '@/lib/i18n/I18nContext';
@@ -12,7 +12,9 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const { t, locale, setLocale } = useI18n();
+  const [currentHash, setCurrentHash] = useState<string>('');
   
   // Определяем, находимся ли мы на главной странице
   const isHomePage = pathname === '/' || pathname === '/the-quiet-makers';
@@ -30,6 +32,53 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Отслеживаем hash, чтобы корректно подсвечивать пункт 'Как это работает'
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const syncHash = () => setCurrentHash(window.location.hash || '');
+    syncHash();
+    window.addEventListener('hashchange', syncHash);
+    return () => window.removeEventListener('hashchange', syncHash);
+  }, []);
+
+  const isItemActive = (href: string | { pathname?: string; hash?: string }) => {
+    if (typeof href === 'string') {
+      // поддержка строк с hash, напр. '/#how'
+      const [pathPart, hashPart] = href.split('#');
+      const pathMatches = pathname === pathPart || (pathPart === '/' && pathname === '/the-quiet-makers');
+      if (hashPart) {
+        return pathMatches && currentHash === `#${hashPart}`;
+      }
+      return pathname === href;
+    }
+    const targetPath = href?.pathname ?? '';
+    const targetHash = href?.hash ? `#${href.hash}` : '';
+    // учитываем basePath на корне
+    const pathMatches = pathname === targetPath || (targetPath === '/' && pathname === '/the-quiet-makers');
+    if (!pathMatches) return false;
+    // если есть hash в цели, активность только при совпадении hash
+    return targetHash ? currentHash === targetHash : true;
+  };
+
+  const handleHowClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Если уже на главной, скроллим без перезагрузки и выставляем hash
+    if (isHomePage) {
+      e.preventDefault();
+      const el = document.getElementById('how');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // обновляем адресную строку, чтобы появился #how
+        const base = window.location.pathname;
+        history.replaceState(null, '', `${base}#how`);
+        setCurrentHash('#how');
+      }
+      return;
+    }
+    // Иначе обычная навигация на корень с хэшем (router учтёт basePath)
+    e.preventDefault();
+    router.push('/#how');
+  };
 
   // Варианты анимации для мобильного меню
   const menuVariants = {
@@ -53,8 +102,8 @@ export default function Header() {
   
   const navItems = [
     { name: t('common.nav.about'), href: '/about' },
+    { name: t('common.nav.contact'), href: '/contact' },
     { name: t('common.nav.how'), href: '/#how' },
-    { name: t('common.nav.contact'), href: '/#contact' },
   ];
 
   const handleToggleLocale = () => {
@@ -65,13 +114,13 @@ export default function Header() {
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'bg-white/95 backdrop-blur-sm shadow-sm py-3' 
+          ? 'bg-white/95 backdrop-blur-sm shadow-sm py-4' 
           : isHomePage 
-            ? 'bg-white/80 backdrop-blur-sm py-5' 
-            : 'bg-white/95 backdrop-blur-sm py-3'
+            ? 'bg-white/80 backdrop-blur-sm py-6' 
+            : 'bg-white/95 backdrop-blur-sm py-4'
       }`}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           {/* Логотип */}
           <Link href="/" className="flex items-center group">
@@ -80,7 +129,7 @@ export default function Header() {
               <div className="absolute inset-[3px] bg-white rounded-lg group-hover:inset-[2px] transition-all duration-300"></div>
               <div className="absolute inset-[6px] bg-gradient-to-br from-primary-500 to-secondary-500 rounded-md group-hover:inset-[5px] transition-all duration-300"></div>
             </div>
-            <span className={`font-bold text-xl tracking-tight transition-colors duration-300 ${
+            <span className={`font-bold text-xl tracking-tight transition-colors duration-300 whitespace-nowrap ${
               isScrolled || !isHomePage ? 'text-gray-800' : 'text-gray-800'
             } group-hover:text-primary-600`}>
               {t('common.brand')}
@@ -88,20 +137,21 @@ export default function Header() {
           </Link>
           
           {/* Навигация для десктопа */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 nav-nowrap">
             {navItems.map((item, index) => {
-              const isActive = pathname === item.href;
+              const active = isItemActive(item.href);
               
               return (
                 <Link 
                   key={index}
                   href={item.href} 
+                  onClick={item.name === t('common.nav.how') ? handleHowClick : undefined}
                   className={`relative px-2 py-1 font-medium transition-all duration-300 ${
                     isScrolled || !isHomePage 
-                      ? isActive 
+                      ? active 
                         ? 'text-primary-600' 
                         : 'text-gray-700 hover:text-primary-600' 
-                      : isActive 
+                      : active 
                         ? 'text-gray-800' 
                         : 'text-gray-700 hover:text-primary-600'
                   } group`}
@@ -109,7 +159,7 @@ export default function Header() {
                   {item.name}
                   <span className={`absolute bottom-0 left-0 w-full h-0.5 transform scale-x-0 transition-transform duration-300 ${
                     isScrolled || !isHomePage ? 'bg-primary-500' : 'bg-primary-500'
-                  } group-hover:scale-x-100 ${isActive ? 'scale-x-100' : ''}`}></span>
+                  } group-hover:scale-x-100 ${active ? 'scale-x-100' : ''}`}></span>
                 </Link>
               );
             })}
@@ -214,7 +264,7 @@ export default function Header() {
                   </Link>
                 </motion.div>
                 {navItems.map((item, index) => {
-                  const isActive = pathname === item.href;
+                  const active = isItemActive(item.href);
                   
                   return (
                     <motion.div
@@ -225,10 +275,13 @@ export default function Header() {
                     >
                       <Link 
                         href={item.href} 
+                        onClick={(e) => {
+                          if (item.name === t('common.nav.how')) handleHowClick(e);
+                          setIsMenuOpen(false);
+                        }}
                         className={`text-lg font-medium block transition-colors duration-300 ${
-                          isActive ? 'text-primary-600' : 'text-gray-700 hover:text-primary-600'
+                          active ? 'text-primary-600' : 'text-gray-700 hover:text-primary-600'
                         }`}
-                        onClick={() => setIsMenuOpen(false)}
                       >
                         {item.name}
                       </Link>
