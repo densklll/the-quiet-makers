@@ -4,9 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { FaHeart, FaTwitter, FaFacebook, FaInstagram, FaTelegram, FaEnvelope, FaArrowRight } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { useI18n } from '@/lib/i18n/I18nContext';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t } = useI18n();
   
   return (
     <footer className="bg-gradient-to-b from-gray-50 to-gray-100 text-gray-800 relative overflow-hidden">
@@ -21,10 +23,10 @@ export default function Footer() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
               <div className="max-w-2xl">
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-3 sm:mb-4 mobile-text-balance">
-                  Готовы начать помогать?
+                  {t('footer.ctaTitle')}
                 </h2>
                 <p className="text-sm sm:text-base text-gray-600 mb-0 md:pr-8 mobile-text-balance">
-                  Пройдите короткий тест и найдите проекты, которые соответствуют вашим ценностям и интересам.
+                  {t('footer.ctaText')}
                 </p>
               </div>
               <motion.div
@@ -36,7 +38,7 @@ export default function Footer() {
                   href="/quiz" 
                   className="inline-flex items-center justify-center w-full md:w-auto py-3 sm:py-4 px-6 sm:px-8 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-bold rounded-xl shadow-sm hover:shadow transition-all whitespace-nowrap"
                 >
-                  Пройти тест
+                  {t('common.actions.takeQuiz')}
                   <FaArrowRight className="ml-2" />
                 </Link>
               </motion.div>
@@ -56,12 +58,11 @@ export default function Footer() {
                 <div className="absolute inset-[6px] bg-gradient-to-br from-primary-500 to-secondary-500 rounded-md"></div>
               </div>
               <span className="font-bold text-lg sm:text-xl tracking-tight text-gray-800">
-                The Quiet Makers
+                {t('common.brand')}
               </span>
             </Link>
             <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed mobile-text-balance">
-              Платформа, которая помогает людям находить благотворительные проекты, 
-              соответствующие их ценностям и интересам.
+              {t('footer.tagline')}
             </p>
             <div className="flex space-x-4">
               <motion.a 
@@ -100,12 +101,12 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-bold text-gray-800 mb-6">Навигация</h3>
+            <h3 className="text-lg font-bold text-gray-800 mb-6">{t('common.labels.navigation')}</h3>
             <ul className="space-y-4">
               <li>
                 <Link href="/projects" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
                   <span className="relative">
-                    Проекты
+                    {t('common.nav.projects')}
                     <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
                   </span>
                 </Link>
@@ -113,7 +114,7 @@ export default function Footer() {
               <li>
                 <Link href="/quiz" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
                   <span className="relative">
-                    Подобрать проект
+                    {t('common.nav.quiz')}
                     <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
                   </span>
                 </Link>
@@ -121,7 +122,7 @@ export default function Footer() {
               <li>
                 <Link href="/about" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
                   <span className="relative">
-                    О платформе
+                    {t('common.nav.about')}
                     <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
                   </span>
                 </Link>
@@ -130,12 +131,12 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-bold text-gray-800 mb-6">Правовая информация</h3>
+            <h3 className="text-lg font-bold text-gray-800 mb-6">{t('common.labels.legal')}</h3>
             <ul className="space-y-4">
               <li>
                 <Link href="#" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
                   <span className="relative">
-                    Условия использования
+                    {t('footer.nav.terms')}
                     <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
                   </span>
                 </Link>
@@ -143,7 +144,7 @@ export default function Footer() {
               <li>
                 <Link href="#" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
                   <span className="relative">
-                    Политика конфиденциальности
+                    {t('footer.nav.privacy')}
                     <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
                   </span>
                 </Link>
@@ -151,7 +152,7 @@ export default function Footer() {
               <li>
                 <Link href="#" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 inline-flex items-center">
                   <span className="relative">
-                    Правила пожертвований
+                    {t('footer.nav.donationRules')}
                     <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
                   </span>
                 </Link>
@@ -160,7 +161,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-bold text-gray-800 mb-6">Связаться с нами</h3>
+            <h3 className="text-lg font-bold text-gray-800 mb-6">{t('common.labels.contactUs')}</h3>
             <div className="space-y-4">
               <a href="mailto:info@quietmakers.org" className="flex items-center text-gray-600 hover:text-primary-600 transition-colors duration-300 group">
                 <div className="bg-gray-100 p-2 rounded-full mr-3 group-hover:bg-primary-50 transition-colors duration-300">
@@ -175,7 +176,7 @@ export default function Footer() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </span>
-                Москва, Россия
+                {t('common.labels.moscowRussia')}
               </p>
             </div>
           </div>
@@ -183,10 +184,10 @@ export default function Footer() {
         
         <div className="border-t border-gray-200 mt-8 sm:mt-12 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-500 text-xs sm:text-sm mb-4 md:mb-0 text-center md:text-left">
-            &copy; {currentYear} The Quiet Makers. Все права защищены.
+            &copy; {currentYear} {t('common.brand')}. {t('common.messages.copyright')}
           </p>
           <p className="text-gray-500 text-xs sm:text-sm flex items-center">
-            Сделано с <FaHeart className="text-primary-500 mx-1" /> для лучшего мира
+            {t('common.messages.madeWithLove')} <FaHeart className="text-primary-500 mx-1" />
           </p>
         </div>
       </div>

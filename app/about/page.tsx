@@ -7,8 +7,10 @@ import { motion } from 'framer-motion';
 import { FaHandHoldingHeart, FaLightbulb, FaShieldAlt, FaChartLine, FaRobot, FaSearch, FaRegCheckCircle, FaRegCreditCard, FaRegChartBar, FaLeaf, FaPaw } from 'react-icons/fa';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useI18n } from '@/lib/i18n/I18nContext';
 
 export default function AboutPage() {
+  const { t } = useI18n();
   return (
     <>
       <Header />
@@ -25,23 +27,23 @@ export default function AboutPage() {
                   transition={{ duration: 0.5 }}
                 >
                   <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                    Мы делаем благотворительность <span className="text-primary-300">доступной и прозрачной</span>
+                    {t('about.hero.title').split('доступной').join('<span class="text-primary-300">доступной</span>')}
                   </h1>
                   <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 max-w-lg">
-                    Наша миссия — соединять людей с проверенными благотворительными проектами, которые им действительно близки.
+                    {t('about.hero.subtitle')}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link 
                       href="/quiz" 
                       className="inline-block py-3 px-6 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all hover:scale-105 transform text-center"
                     >
-                      Пройти тест
+                      {t('about.hero.takeQuiz')}
                     </Link>
                     <Link 
                       href="/projects" 
                       className="inline-block py-3 px-6 bg-white text-primary-600 font-bold rounded-xl border border-primary-200 shadow-sm hover:shadow-md transition-all hover:scale-105 transform text-center"
                     >
-                      Смотреть проекты
+                      {t('about.hero.viewProjects')}
                     </Link>
                   </div>
                 </motion.div>
@@ -56,7 +58,7 @@ export default function AboutPage() {
                   <div className="relative z-10">
                     <img 
                       src="/images/about-hero.jpg" 
-                      alt="Люди помогают друг другу" 
+                      alt={t('about.hero.heroAlt')} 
                       className="rounded-2xl shadow-xl"
                     />
                   </div>
@@ -83,9 +85,9 @@ export default function AboutPage() {
                 <div className="bg-primary-50 rounded-full w-16 h-16 flex items-center justify-center mb-6 shadow-sm">
                   <FaHandHoldingHeart className="text-primary-600 text-2xl" />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-600 mb-4">Наша миссия</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-600 mb-4">{t('about.mission.title')}</h3>
                 <p className="text-gray-700 text-base sm:text-lg">
-                  Мы стремимся сделать благотворительность доступной и прозрачной для каждого. Наша платформа соединяет людей с проверенными проектами, которые соответствуют их ценностям и интересам. Мы верим, что технологии могут сделать помощь другим простой, безопасной и эффективной.
+                  {t('about.mission.text')}
                 </p>
               </motion.div>
               
@@ -100,9 +102,9 @@ export default function AboutPage() {
                 <div className="bg-secondary-50 rounded-full w-16 h-16 flex items-center justify-center mb-6 shadow-sm">
                   <FaLeaf className="text-secondary-600 text-2xl" />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-600 mb-4">Наше видение</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-600 mb-4">{t('about.mission.visionTitle')}</h3>
                 <p className="text-gray-700 text-base sm:text-lg">
-                  Мы видим мир, где каждый человек может легко найти и поддержать благотворительные проекты, которые резонируют с его личными ценностями. Мы стремимся создать экосистему, где благотворительность становится частью повседневной жизни, а каждое пожертвование имеет измеримое влияние.
+                  {t('about.mission.visionText')}
                 </p>
               </motion.div>
             </div>
@@ -115,9 +117,9 @@ export default function AboutPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-600 mb-6">Наши ценности</h2>
+                <h2 className="text-3xl sm:text-4xl font-bold text-gray-600 mb-6">{t('about.mission.valuesTitle')}</h2>
                 <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto">
-                  Принципы, которыми мы руководствуемся в нашей работе
+                  {t('about.mission.valuesSubtitle')}
                 </p>
               </motion.div>
               
@@ -133,9 +135,9 @@ export default function AboutPage() {
                   <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mb-6 shadow-sm">
                     <FaPaw className="text-primary-600 text-2xl" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-600 mb-4">Доверие и прозрачность</h3>
+                  <h3 className="text-xl font-bold text-gray-600 mb-4">{t('about.mission.value1Title')}</h3>
                   <p className="text-gray-700 text-base">
-                    Мы тщательно проверяем каждый проект и обеспечиваем полную прозрачность использования средств. Вы всегда знаете, куда идут ваши пожертвования и какое влияние они оказывают.
+                    {t('about.mission.value1Text')}
                   </p>
                 </motion.div>
                 
@@ -150,9 +152,9 @@ export default function AboutPage() {
                   <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mb-6 shadow-sm">
                     <FaHandHoldingHeart className="text-secondary-600 text-2xl" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-600 mb-4">Персонализация</h3>
+                  <h3 className="text-xl font-bold text-gray-600 mb-4">{t('about.mission.value2Title')}</h3>
                   <p className="text-gray-700 text-base">
-                    Мы верим, что благотворительность должна быть личной. Наша платформа помогает найти проекты, которые соответствуют вашим ценностям и интересам, делая опыт благотворительности более значимым.
+                    {t('about.mission.value2Text')}
                   </p>
                 </motion.div>
                 
@@ -167,9 +169,9 @@ export default function AboutPage() {
                   <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mb-6 shadow-sm">
                     <FaChartLine className="text-amber-600 text-2xl" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-600 mb-4">Технологии, которые работают на вас</h3>
+                  <h3 className="text-xl font-bold text-gray-600 mb-4">{t('about.mission.value3Title')}</h3>
                   <p className="text-gray-700 text-base">
-                    Мы используем современные решения, чтобы сделать благотворительность удобной, безопасной и персонализированной. Платформа сама подберёт проекты, которые вам близки, и покажет их влияние.
+                    {t('about.mission.value3Text')}
                   </p>
                 </motion.div>
               </div>
@@ -187,9 +189,9 @@ export default function AboutPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-600 mb-6">Как это работает</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-600 mb-6">{t('about.mission.howTitle')}</h2>
               <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto">
-                Мы упростили процесс поиска и поддержки благотворительных проектов
+                {t('about.mission.howText')}
               </p>
             </motion.div>
             
@@ -208,9 +210,9 @@ export default function AboutPage() {
                 <div className="bg-primary-50 rounded-full w-14 h-14 flex items-center justify-center mb-5">
                   <FaRobot className="text-primary-600 text-2xl" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-600 mb-3">Оценка ваших интересов с помощью AI</h3>
+                <h3 className="text-lg font-bold text-gray-600 mb-3">{t('about.mission.steps.s1Title')}</h3>
                 <p className="text-gray-700 text-sm sm:text-base">
-                  Интеллектуальный помощник анализирует ваши предпочтения через простые вопросы, определяя близкие вам направления.
+                  {t('about.mission.steps.s1Text')}
                 </p>
               </motion.div>
               
@@ -228,9 +230,9 @@ export default function AboutPage() {
                 <div className="bg-blue-50 rounded-full w-14 h-14 flex items-center justify-center mb-5">
                   <FaSearch className="text-blue-600 text-2xl" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-600 mb-3">Подбор проектов</h3>
+                <h3 className="text-lg font-bold text-gray-600 mb-3">{t('about.mission.steps.s2Title')}</h3>
                 <p className="text-gray-700 text-sm sm:text-base">
-                  После анализа интересов ассистент AI предоставляет вам список подходящих проверенных проектов.
+                  {t('about.mission.steps.s2Text')}
                 </p>
               </motion.div>
               
@@ -248,9 +250,9 @@ export default function AboutPage() {
                 <div className="bg-green-50 rounded-full w-14 h-14 flex items-center justify-center mb-5">
                   <FaShieldAlt className="text-green-600 text-2xl" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-600 mb-3">Прозрачность благодаря блокчейн</h3>
+                <h3 className="text-lg font-bold text-gray-600 mb-3">{t('about.mission.steps.s3Title')}</h3>
                 <p className="text-gray-700 text-sm sm:text-base">
-                  Каждое пожертвование фиксируется в блокчейне, что позволяет отслеживать использование средств.
+                  {t('about.mission.steps.s3Text')}
                 </p>
               </motion.div>
               
@@ -268,9 +270,9 @@ export default function AboutPage() {
                 <div className="bg-purple-50 rounded-full w-14 h-14 flex items-center justify-center mb-5">
                   <FaRegCreditCard className="text-purple-600 text-2xl" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-600 mb-3">Простое пожертвование</h3>
+                <h3 className="text-lg font-bold text-gray-600 mb-3">{t('about.mission.steps.s4Title')}</h3>
                 <p className="text-gray-700 text-sm sm:text-base">
-                  Выберите проект и сделайте пожертвование всего за несколько кликов через удобную платёжную систему.
+                  {t('about.mission.steps.s4Text')}
                 </p>
               </motion.div>
               
@@ -288,9 +290,9 @@ export default function AboutPage() {
                 <div className="bg-amber-50 rounded-full w-14 h-14 flex items-center justify-center mb-5">
                   <FaRegChartBar className="text-amber-600 text-2xl" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-600 mb-3">Измеримый результат</h3>
+                <h3 className="text-lg font-bold text-gray-600 mb-3">{t('about.mission.steps.s5Title')}</h3>
                 <p className="text-gray-700 text-sm sm:text-base">
-                  Мы показываем, как ваш вклад меняет жизни. Следите за прогрессом и будьте уверены в своём выборе.
+                  {t('about.mission.steps.s5Text')}
                 </p>
               </motion.div>
             </div>
@@ -315,23 +317,23 @@ export default function AboutPage() {
                 </div>
                 <div className="relative z-10">
                   <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
-                    Узнайте, как легко вы можете помочь. Ответьте на несколько вопросов и выберите проект.
+                    {t('about.mission.ctaTitle')}
                   </h2>
                   <p className="text-white text-base sm:text-lg mb-8 max-w-2xl">
-                    Пройдите короткий тест и найдите проекты, которые вам действительно близки.
+                    {t('about.mission.ctaText')}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link 
                       href="/quiz" 
                       className="inline-block py-3 sm:py-4 px-6 sm:px-8 bg-white text-primary-600 font-bold rounded-xl shadow-md hover:shadow-lg transition-all hover:scale-105 transform text-center"
                     >
-                      Начать тест
+                      {t('about.mission.ctaStart')}
                     </Link>
                     <Link 
                       href="/projects" 
                       className="inline-block py-3 sm:py-4 px-6 sm:px-8 bg-white/10 text-white font-bold rounded-xl border border-white/30 hover:bg-white/20 transition-all hover:scale-105 transform text-center"
                     >
-                      Посмотреть все проекты
+                      {t('about.mission.ctaViewAll')}
                     </Link>
                   </div>
                 </div>
