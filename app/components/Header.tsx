@@ -15,7 +15,7 @@ export default function Header() {
   const { t, locale, setLocale } = useI18n();
   
   // Определяем, находимся ли мы на главной странице
-  const isHomePage = pathname === '/';
+  const isHomePage = pathname === '/' || pathname === '/the-quiet-makers';
   
   // Отслеживание скролла для изменения стиля хедера
   useEffect(() => {
@@ -52,9 +52,9 @@ export default function Header() {
   };
   
   const navItems = [
-    { name: t('common.nav.projects'), href: '/projects' },
-    { name: t('common.nav.quiz'), href: '/quiz' },
-    { name: t('common.nav.about'), href: '/about' }
+    { name: t('common.nav.about'), href: '/about' },
+    { name: t('common.nav.how'), href: '/#how' },
+    { name: t('common.nav.contact'), href: '/#contact' },
   ];
 
   const handleToggleLocale = () => {
@@ -115,8 +115,14 @@ export default function Header() {
             })}
           </nav>
           
-          {/* Кнопки авторизации и переключатель языка для десктопа */}
+          {/* Кнопки: большая CTA, авторизация и переключатель языка для десктопа */}
           <div className="hidden md:flex items-center space-x-4">
+            <Link 
+              href="/quiz" 
+              className="py-2.5 px-5 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold rounded-lg shadow-sm hover:shadow transition-all"
+            >
+              {t('common.nav.quiz')}
+            </Link>
             <Link 
               href="/favorites" 
               className={`p-2 rounded-full transition-all duration-300 ${
@@ -194,6 +200,19 @@ export default function Header() {
           >
             <div className="container mx-auto px-4 py-6">
               <nav className="flex flex-col space-y-5">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.05 }}
+                >
+                  <Link 
+                    href="/quiz" 
+                    className="py-3 px-4 text-center bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold rounded-xl shadow-sm hover:shadow transition-all duration-300"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {t('common.nav.quiz')}
+                  </Link>
+                </motion.div>
                 {navItems.map((item, index) => {
                   const isActive = pathname === item.href;
                   

@@ -5,6 +5,8 @@ const en = {
       projects: "Projects",
       quiz: "Find a project",
       about: "About",
+      how: "How it works",
+      contact: "Contact us",
     },
     actions: {
       login: "Log in",
@@ -88,6 +90,10 @@ const en = {
       badgeText: "Every action matters",
       helped: "Already helped",
       peopleCount: "12,458 people",
+    },
+    mission: {
+      title: "Our mission",
+      text: "Our mission is to show that charity is not just about helping others, but a way to find meaning, become part of something bigger, and enrich your life. We support those who are already changing the world — local initiatives and small but meaningful actions created by quiet heroes. We help people find projects that resonate with their values and ensure transparency, security, and efficiency through technology. Artificial intelligence and blockchain make charity convenient, honest, and accessible to everyone.",
     },
     categories: {
       title: "Choose a direction to help",

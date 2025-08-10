@@ -33,6 +33,8 @@ npm install
 
 # Запуск сервера разработки
 npm run dev
+
+ npm run build
 ```
 
 Откройте [http://localhost:3000](http://localhost:3000) в вашем браузере, чтобы увидеть результат.

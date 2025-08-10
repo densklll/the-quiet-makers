@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { FaHeart, FaTwitter, FaFacebook, FaInstagram, FaTelegram, FaEnvelope, FaArrowRight } from 'react-icons/fa';
+import { FaTiktok } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
 import { useI18n } from '@/lib/i18n/I18nContext';
 
@@ -82,7 +83,8 @@ export default function Footer() {
                 <FaFacebook size={20} />
               </motion.a>
               <motion.a 
-                href="#" 
+                href="https://www.instagram.com/quietmakers?igsh=MWp0d3o3M2FkaGZtNQ%3D%3D&utm_source=qr" 
+                target="_blank" rel="noopener noreferrer"
                 className="text-gray-400 hover:text-primary-600 transition-colors duration-300"
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
@@ -96,6 +98,15 @@ export default function Footer() {
                 whileTap={{ scale: 0.9 }}
               >
                 <FaTelegram size={20} />
+              </motion.a>
+              <motion.a 
+                href="https://www.tiktok.com/@quietmakers?_t=ZS-8uQdoCfpwNY&_r=1" 
+                target="_blank" rel="noopener noreferrer"
+                className="text-gray-400 hover:text-primary-600 transition-colors duration-300"
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <FaTiktok size={20} />
               </motion.a>
             </div>
           </div>
@@ -160,7 +171,7 @@ export default function Footer() {
             </ul>
           </div>
           
-          <div>
+          <div id="contact">
             <h3 className="text-lg font-bold text-gray-800 mb-6">{t('common.labels.contactUs')}</h3>
             <div className="space-y-4">
               <a href="mailto:info@quietmakers.org" className="flex items-center text-gray-600 hover:text-primary-600 transition-colors duration-300 group">

@@ -18,7 +18,7 @@ export default function HomePage() {
       
       <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-b from-gray-50 to-white pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-20 md:pb-32 overflow-hidden">
+        <section className="relative bg-gradient-to-b from-gray-50 to-white pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-20 md:pb-32">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary-100 rounded-full opacity-30 blur-3xl"></div>
             <div className="absolute top-60 -left-20 w-72 h-72 bg-secondary-100 rounded-full opacity-30 blur-3xl"></div>
@@ -39,7 +39,7 @@ export default function HomePage() {
                     </span>
                   </h1>
                 </div>
-                <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-xl leading-relaxed mobile-text-balance text-center mx-auto">
+                <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-3xl leading-relaxed mobile-text-balance text-center mx-auto">
                   {t('home.hero.subtitle')}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -103,7 +103,27 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        
+
+        {/* Mission Section */}
+        <section className="py-12 sm:py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <motion.div 
+              className="max-w-5xl mx-auto text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4 sm:mb-6">
+                {t('home.mission.title')}
+              </h2>
+              <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-4xl mx-auto">
+                {t('home.mission.text')}
+              </p>
+            </motion.div>
+          </div>
+        </section>
+          
         {/* Категории */}
         <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
@@ -233,7 +253,7 @@ export default function HomePage() {
         </section>
         
         {/* Как это работает */}
-        <section className="py-16 sm:py-20 bg-gradient-to-b from-white to-gray-50">
+        <section id="how" className="py-16 sm:py-20 bg-gradient-to-b from-white to-gray-50">
           <div className="container mx-auto px-4">
             <motion.div 
               className="text-center mb-10 sm:mb-16"
@@ -329,7 +349,7 @@ export default function HomePage() {
         </section>
         
         {/* CTA */}
-        <section className="py-16 sm:py-20">
+        <section id="cta" className="py-16 sm:py-20">
           <div className="max-w-5xl mx-auto px-4">
             <motion.div 
               className="bg-gradient-to-r from-primary-600 to-secondary-600 rounded-2xl overflow-hidden shadow-xl"
