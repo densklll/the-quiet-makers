@@ -8,8 +8,10 @@ import { FaHandHoldingHeart, FaUsers, FaPaw, FaTree, FaArrowRight, FaRegLightbul
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MainImage from '@/public/images/main-image.jpeg';
+import { useI18n } from '@/lib/i18n/I18nContext';
 
 export default function HomePage() {
+  const { t } = useI18n();
   return (
     <>
       <Header />
@@ -33,12 +35,12 @@ export default function HomePage() {
                 <div className="mb-6">
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-center">
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-600">
-                      Делать добро просто. Найди проект, который вдохновит тебя на помощь.
+                      {t('home.hero.title')}
                     </span>
                   </h1>
                 </div>
                 <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-xl leading-relaxed mobile-text-balance text-center mx-auto">
-                  The Quiet Makers — это место, где каждый может найти своё счастье в добрых делах. Мы объединяем людей и проекты, делая помощь прозрачной и вдохновляющей.
+                  {t('home.hero.subtitle')}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <motion.div
@@ -49,7 +51,7 @@ export default function HomePage() {
                       href="/quiz" 
                       className="w-full sm:w-auto inline-block py-3 sm:py-4 px-6 sm:px-8 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all text-center"
                     >
-                      Найти свой проект
+                      {t('home.hero.ctaPrimary')}
                     </Link>
                   </motion.div>
                   <motion.div
@@ -60,7 +62,7 @@ export default function HomePage() {
                       href="/about" 
                       className="w-full sm:w-auto inline-block py-3 sm:py-4 px-6 sm:px-8 bg-white text-gray-700 font-bold rounded-xl border border-gray-200 hover:border-gray-300 hover:bg-gray-50 shadow-sm hover:shadow transition-all text-center"
                     >
-                      Узнать больше о платформе
+                      {t('home.hero.ctaSecondary')}
                     </Link>
                   </motion.div>
                 </div>
@@ -75,14 +77,14 @@ export default function HomePage() {
                 <div className="relative h-64 sm:h-80 md:h-96 w-full rounded-2xl overflow-hidden shadow-xl">
                   <Image
                     src={MainImage}
-                    alt="Благотворительность"
+                    alt={t('home.hero.badgeText')}
                     fill
                     className="object-cover"
                     priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 p-8 pb-20 md:pb-16">
-                    <p className="text-white text-xl font-medium">Каждое действие имеет значение</p>
+                    <p className="text-white text-xl font-medium">{t('home.hero.badgeText')}</p>
                   </div>
                 </div>
                 
@@ -92,8 +94,8 @@ export default function HomePage() {
                       <FaRegCheckCircle className="text-green-600 text-base sm:text-xl" />
                     </div>
                     <div>
-                      <p className="text-xs sm:text-sm text-gray-600">Уже помогли</p>
-                      <p className="font-bold text-sm sm:text-base text-gray-800">12,458 человек</p>
+                      <p className="text-xs sm:text-sm text-gray-600">{t('home.hero.helped')}</p>
+                      <p className="font-bold text-sm sm:text-base text-gray-800">{t('home.hero.peopleCount')}</p>
                     </div>
                   </div>
                 </div>
@@ -112,9 +114,9 @@ export default function HomePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4 sm:mb-6 mobile-text-balance">Выберите направление помощи</h2>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4 sm:mb-6 mobile-text-balance">{t('home.categories.title')}</h2>
               <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mobile-text-balance">
-                Мы поддерживаем проекты в различных сферах, чтобы каждый мог найти то, что резонирует с его ценностями
+                {t('home.categories.subtitle')}
               </p>
             </motion.div>
             
@@ -130,8 +132,8 @@ export default function HomePage() {
                 <Link href="/projects?categories=people" className="block">
                   <div className="relative h-40 sm:h-48 overflow-hidden">
                     <Image
-                      src="https://placehold.co/800x600/3b82f6/FFFFFF?text=Помощь+людям"
-                      alt="Помощь людям"
+                      src={`https://placehold.co/800x600/3b82f6/FFFFFF?text=${encodeURIComponent(t('home.categories.people.imageText'))}`}
+                      alt={t('home.categories.people.title')}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
@@ -142,13 +144,13 @@ export default function HomePage() {
                       <div className="bg-white rounded-full p-2 sm:p-3 mr-3 sm:mr-4 shadow-sm">
                         <FaUsers className="text-blue-600 text-lg sm:text-xl" />
                       </div>
-                      <h3 className="text-lg sm:text-xl font-bold text-gray-800">Помощь людям</h3>
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-800">{t('home.categories.people.title')}</h3>
                     </div>
                     <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
-                      Поддержите проекты, которые помогают людям в трудной жизненной ситуации, детям, пожилым и людям с особенностями развития.
+                      {t('home.categories.people.desc')}
                     </p>
                     <div className="flex items-center text-blue-600 font-medium group-hover:translate-x-2 transition-transform">
-                      Смотреть проекты
+                      {t('home.categories.viewProjects')}
                       <FaArrowRight className="ml-2" />
                     </div>
                   </div>
@@ -166,8 +168,8 @@ export default function HomePage() {
                 <Link href="/projects?categories=animals" className="block">
                   <div className="relative h-40 sm:h-48 overflow-hidden">
                     <Image
-                      src="https://placehold.co/800x600/f59e0b/FFFFFF?text=Помощь+животным"
-                      alt="Помощь животным"
+                      src={`https://placehold.co/800x600/f59e0b/FFFFFF?text=${encodeURIComponent(t('home.categories.animals.imageText'))}`}
+                      alt={t('home.categories.animals.title')}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
@@ -178,13 +180,13 @@ export default function HomePage() {
                       <div className="bg-white rounded-full p-2 sm:p-3 mr-3 sm:mr-4 shadow-sm">
                         <FaPaw className="text-amber-600 text-lg sm:text-xl" />
                       </div>
-                      <h3 className="text-lg sm:text-xl font-bold text-gray-800">Помощь животным</h3>
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-800">{t('home.categories.animals.title')}</h3>
                     </div>
                     <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
-                      Поддержите проекты, направленные на защиту и спасение животных, создание приютов и борьбу за права братьев наших меньших.
+                      {t('home.categories.animals.desc')}
                     </p>
                     <div className="flex items-center text-amber-600 font-medium group-hover:translate-x-2 transition-transform">
-                      Смотреть проекты
+                      {t('home.categories.viewProjects')}
                       <FaArrowRight className="ml-2" />
                     </div>
                   </div>
@@ -202,8 +204,8 @@ export default function HomePage() {
                 <Link href="/projects?categories=environment" className="block">
                   <div className="relative h-40 sm:h-48 overflow-hidden">
                     <Image
-                      src="https://placehold.co/800x600/10b981/FFFFFF?text=Экология"
-                      alt="Экология"
+                      src={`https://placehold.co/800x600/10b981/FFFFFF?text=${encodeURIComponent(t('home.categories.environment.imageText'))}`}
+                      alt={t('home.categories.environment.title')}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
@@ -214,13 +216,13 @@ export default function HomePage() {
                       <div className="bg-white rounded-full p-2 sm:p-3 mr-3 sm:mr-4 shadow-sm">
                         <FaTree className="text-green-600 text-lg sm:text-xl" />
                       </div>
-                      <h3 className="text-lg sm:text-xl font-bold text-gray-800">Экология</h3>
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-800">{t('home.categories.environment.title')}</h3>
                     </div>
                     <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
-                      Поддержите проекты, направленные на защиту окружающей среды, сохранение биоразнообразия и борьбу с изменением климата.
+                      {t('home.categories.environment.desc')}
                     </p>
                     <div className="flex items-center text-green-600 font-medium group-hover:translate-x-2 transition-transform">
-                      Смотреть проекты
+                      {t('home.categories.viewProjects')}
                       <FaArrowRight className="ml-2" />
                     </div>
                   </div>
@@ -240,9 +242,9 @@ export default function HomePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4 sm:mb-6 mobile-text-balance">Как это работает</h2>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4 sm:mb-6 mobile-text-balance">{t('home.howItWorks.title')}</h2>
               <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mobile-text-balance">
-                Мы упростили процесс поиска и поддержки благотворительных проектов
+                {t('home.howItWorks.simplified')}
               </p>
             </motion.div>
             
@@ -261,9 +263,9 @@ export default function HomePage() {
                 <div className="bg-primary-50 rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center mb-4 sm:mb-6">
                   <FaRegLightbulb className="text-primary-600 text-xl sm:text-2xl" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">Пройдите тест</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">{t('home.howItWorks.step1.title')}</h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Ответьте на несколько простых вопросов, чтобы мы могли определить, какие направления благотворительности вам ближе всего.
+                  {t('home.howItWorks.step1.desc')}
                 </p>
               </motion.div>
               
@@ -281,9 +283,9 @@ export default function HomePage() {
                 <div className="bg-blue-50 rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center mb-4 sm:mb-6">
                   <FaHandHoldingHeart className="text-blue-600 text-xl sm:text-2xl" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">Выберите проект</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">{t('home.howItWorks.step2.title')}</h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Изучите подобранные специально для вас проекты и выберите тот, который вдохновляет вас больше всего.
+                  {t('home.howItWorks.step2.desc')}
                 </p>
               </motion.div>
               
@@ -301,9 +303,9 @@ export default function HomePage() {
                 <div className="bg-green-50 rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center mb-4 sm:mb-6">
                   <FaRegCheckCircle className="text-green-600 text-xl sm:text-2xl" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">Сделайте вклад</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">{t('home.howItWorks.step3.title')}</h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Поддержите выбранный проект и следите за его прогрессом. Вы всегда будете знать, как используются ваши средства.
+                  {t('home.howItWorks.step3.desc')}
                 </p>
               </motion.div>
             </div>
@@ -318,7 +320,7 @@ export default function HomePage() {
                   href="/about" 
                   className="inline-flex items-center justify-center w-full sm:w-auto py-3 sm:py-4 px-6 sm:px-8 bg-white text-gray-700 font-bold rounded-xl border border-gray-200 hover:border-gray-300 hover:bg-gray-50 shadow-sm hover:shadow transition-all"
                 >
-                  Узнать больше
+                  {t('common.actions.learnMoreShort')}
                   <FaArrowRight className="ml-2" />
                 </Link>
               </motion.div>
@@ -344,10 +346,10 @@ export default function HomePage() {
                 </div>
                 <div className="relative z-10">
                   <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6 mobile-text-balance">
-                    Начните помогать уже сегодня
+                    {t('home.cta.title')}
                   </h2>
                   <p className="text-white/90 text-base sm:text-lg mb-6 sm:mb-8 max-w-2xl mobile-text-balance">
-                    Пройдите короткий тест и найдите проекты, которые соответствуют вашим ценностям и интересам.
+                    {t('home.cta.desc')}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <motion.div
@@ -359,7 +361,7 @@ export default function HomePage() {
                         href="/quiz" 
                         className="inline-block w-full sm:w-auto text-center py-3 sm:py-4 px-6 sm:px-8 bg-white text-primary-600 font-bold rounded-xl shadow-md hover:shadow-lg transition-all"
                       >
-                        Пройти тест
+                        {t('home.cta.takeQuiz')}
                       </Link>
                     </motion.div>
                     <motion.div
@@ -371,7 +373,7 @@ export default function HomePage() {
                         href="/projects" 
                         className="inline-block w-full sm:w-auto text-center py-3 sm:py-4 px-6 sm:px-8 bg-white/10 text-white font-bold rounded-xl border border-white/30 hover:bg-white/20 transition-all"
                       >
-                        Смотреть все проекты
+                        {t('common.actions.viewAllProjects')}
                       </Link>
                     </motion.div>
                   </div>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { FaUser, FaEnvelope, FaLock, FaGoogle, FaVk } from 'react-icons/fa';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useI18n } from '@/lib/i18n/I18nContext';
 
 export default function RegisterPage() {
   const [name, setName] = useState('');
@@ -13,34 +14,29 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [error, setError] = useState('');
+  const { t } = useI18n();
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     // Простая валидация
     if (!name || !email || !password || !confirmPassword) {
-      setError('Пожалуйста, заполните все поля');
+      setError(t('auth.register.errorFillAll'));
       return;
     }
     
     if (password !== confirmPassword) {
-      setError('Пароли не совпадают');
+      setError(t('auth.register.errorPasswords'));
       return;
     }
     
     if (!agreeTerms) {
-      setError('Необходимо согласиться с условиями использования');
+      setError(t('auth.register.errorTerms'));
       return;
     }
     
-    // Здесь будет логика регистрации
     console.log('Регистрация с данными:', { name, email, password });
-    
-    // Сбрасываем ошибку
     setError('');
-    
-    // В реальном приложении здесь был бы редирект на страницу подтверждения email
-    // или на главную страницу
   };
   
   return (
@@ -51,7 +47,7 @@ export default function RegisterPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
             <div className="p-8">
-              <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">Регистрация</h1>
+              <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">{t('auth.register.title')}</h1>
               
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
@@ -62,7 +58,7 @@ export default function RegisterPage() {
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="name" className="input-label">
-                    Имя
+                    {t('common.labels.name')}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -72,7 +68,7 @@ export default function RegisterPage() {
                       type="text"
                       id="name"
                       className="input-field pl-10"
-                      placeholder="Введите ваше имя"
+                      placeholder={t('common.placeholders.enterName')}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                     />
@@ -81,7 +77,7 @@ export default function RegisterPage() {
                 
                 <div className="form-group">
                   <label htmlFor="email" className="input-label">
-                    Email
+                    {t('common.labels.email')}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -91,7 +87,7 @@ export default function RegisterPage() {
                       type="email"
                       id="email"
                       className="input-field pl-10"
-                      placeholder="Введите ваш email"
+                      placeholder={t('common.placeholders.enterEmail')}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -100,7 +96,7 @@ export default function RegisterPage() {
                 
                 <div className="form-group">
                   <label htmlFor="password" className="input-label">
-                    Пароль
+                    {t('common.labels.password')}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -110,7 +106,7 @@ export default function RegisterPage() {
                       type="password"
                       id="password"
                       className="input-field pl-10"
-                      placeholder="Создайте пароль"
+                      placeholder={t('common.placeholders.createPassword')}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -119,7 +115,7 @@ export default function RegisterPage() {
                 
                 <div className="form-group">
                   <label htmlFor="confirm-password" className="input-label">
-                    Подтверждение пароля
+                    {t('common.labels.confirmPassword')}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -129,7 +125,7 @@ export default function RegisterPage() {
                       type="password"
                       id="confirm-password"
                       className="input-field pl-10"
-                      placeholder="Подтвердите пароль"
+                      placeholder={t('common.placeholders.confirmPassword')}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
@@ -145,31 +141,31 @@ export default function RegisterPage() {
                     onChange={(e) => setAgreeTerms(e.target.checked)}
                   />
                   <label htmlFor="agree-terms" className="ml-2 block text-sm text-gray-700">
-                    Я согласен с{' '}
+                    {t('auth.register.terms')} {' '}
                     <Link href="/terms" className="text-sky-500 hover:text-sky-600">
-                      условиями использования
+                      {t('auth.register.terms')}
                     </Link>{' '}
-                    и{' '}
+                    {t('common.labels.and')} {' '}
                     <Link href="/privacy" className="text-sky-500 hover:text-sky-600">
-                      политикой конфиденциальности
+                      {t('auth.register.privacy')}
                     </Link>
                   </label>
                 </div>
                 
                 <button type="submit" className="btn-primary w-full mb-4">
-                  Зарегистрироваться
+                  {t('auth.register.signUp')}
                 </button>
                 
                 <div className="text-center text-sm text-gray-600 mb-6">
-                  Уже есть аккаунт?{' '}
+                  {t('auth.register.haveAccount')}{' '}
                   <Link href="/login" className="text-sky-500 hover:text-sky-600">
-                    Войти
+                    {t('auth.register.login')}
                   </Link>
                 </div>
                 
                 <div className="relative flex items-center justify-center mb-6">
                   <div className="border-t border-gray-200 absolute w-full"></div>
-                  <div className="bg-white px-4 relative z-10 text-sm text-gray-500">или</div>
+                  <div className="bg-white px-4 relative z-10 text-sm text-gray-500">{t('common.labels.or')}</div>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
@@ -183,7 +179,7 @@ export default function RegisterPage() {
                     type="button"
                     className="flex items-center justify-center py-2.5 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
                   >
-                    <FaVk className="text-blue-600 mr-2" /> ВКонтакте
+                    <FaVk className="text-blue-600 mr-2" /> {t('auth.login.vk')}
                   </button>
                 </div>
               </form>

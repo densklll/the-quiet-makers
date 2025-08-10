@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { I18nProvider } from "@/lib/i18n/I18nContext";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
@@ -16,11 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
+    <html lang="en">
       <body className={inter.className}>
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <I18nProvider initialLocale="en">
+          <main className="min-h-screen">
+            {children}
+          </main>
+        </I18nProvider>
       </body>
     </html>
   );

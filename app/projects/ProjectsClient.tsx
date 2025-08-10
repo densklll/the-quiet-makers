@@ -9,60 +9,62 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useSearchParams } from 'next/navigation';
 import { Project } from '@/lib/api';
+import { useI18n } from '@/lib/i18n/I18nContext';
 
 // Функция для получения метки категории
-const getCategoryLabel = (category: string): string => {
+const getCategoryLabel = (category: string, t: (k: string)=>string): string => {
   const categoryLabels: Record<string, string> = {
-    'people': 'Люди',
-    'animals': 'Животные',
-    'nature': 'Природа'
+    'people': t('projects.filterLabels.people'),
+    'animals': t('projects.filterLabels.animals'),
+    'nature': t('projects.filterLabels.nature')
   };
   return categoryLabels[category] || category;
 };
 
 // Функция для получения метки формата
-const getFormatLabel = (format: string): string => {
+const getFormatLabel = (format: string, t: (k: string)=>string): string => {
   const formatLabels: Record<string, string> = {
-    'one-time': 'Разовая помощь',
-    'recurring': 'Регулярная помощь',
-    'volunteer': 'Волонтёрство'
+    'one-time': t('projects.filterLabels.oneTime'),
+    'recurring': t('projects.filterLabels.recurring'),
+    'volunteer': t('projects.filterLabels.volunteer')
   };
   return formatLabels[format] || format;
 };
 
 // Стили для тегов
-const tagStyles: Record<string, { icon: JSX.Element, color: string }> = {
-  'Люди': { 
+const buildTagStyles = (t: (k: string)=>string): Record<string, { icon: JSX.Element, color: string }> => ({
+  [t('projects.tagMap.Люди')]: { 
     icon: <FaUsers className="mr-1" />, 
     color: 'bg-blue-50 text-blue-700 border-blue-100' 
   },
-  'Благотворительность': { 
+  [t('projects.tagMap.Благотворительность')]: { 
     icon: <FaHandHoldingHeart className="mr-1" />, 
     color: 'bg-pink-50 text-pink-700 border-pink-100' 
   },
-  'Животные': { 
+  [t('projects.tagMap.Животные')]: { 
     icon: <FaPaw className="mr-1" />, 
     color: 'bg-amber-50 text-amber-700 border-amber-100' 
   },
-  'Экология': { 
+  [t('projects.tagMap.Экология')]: { 
     icon: <FaTree className="mr-1" />, 
     color: 'bg-green-50 text-green-700 border-green-100' 
   },
-  'Дети': {
+  [t('projects.tagMap.Дети')]: {
     icon: <FaUsers className="mr-1" />,
     color: 'bg-purple-50 text-purple-700 border-purple-100'
   },
-  'Природа': {
+  [t('projects.tagMap.Природа')]: {
     icon: <FaTree className="mr-1" />,
     color: 'bg-green-50 text-green-700 border-green-100'
   }
-};
+});
 
 export default function ProjectsClient({ initialProjects }: { initialProjects: Project[] }) {
   const searchParams = useSearchParams();
   const fromQuiz = searchParams.get('quiz') === 'true';
   const categories = searchParams.get('categories')?.split(',') || [];
   const formats = searchParams.get('format')?.split(',') || [];
+  const { t } = useI18n();
   
   const [projects] = useState<Project[]>(initialProjects);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -70,6 +72,8 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   
+  const tagStyles = buildTagStyles(t);
+
   // Фильтрация проектов
   const filteredProjects = projects.filter(project => {
     // Фильтр по поисковому запросу
@@ -88,7 +92,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
   // Обработчик выбора тега
   const handleTagSelect = (tag: string) => {
     if (selectedTags.includes(tag)) {
-      setSelectedTags(selectedTags.filter(t => t !== tag));
+      setSelectedTags(selectedTags.filter(tg => tg !== tag));
     } else {
       setSelectedTags([...selectedTags, tag]);
     }
@@ -112,22 +116,22 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
           {/* Заголовок страницы */}
           <div className="mb-10 sm:mb-16 text-center">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-600 mb-3 sm:mb-4 mobile-text-balance">
-              Проекты, которые соответствуют вашим интересам и готовы к поддержке.
+              {t('projects.page.title')}
             </h1>
             
             {fromQuiz && (
               <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto mobile-text-balance">
-                Мы подобрали проекты на основе ваших предпочтений
+                {t('projects.page.fromQuiz')}
                 {categories.length > 0 && (
                   <>
-                    {' в категориях: '}
-                    <span className="font-medium">{categories.map(cat => getCategoryLabel(cat)).join(', ')}</span>
+                    {t('projects.page.inCategories')}
+                    <span className="font-medium">{categories.map(cat => getCategoryLabel(cat, t)).join(', ')}</span>
                   </>
                 )}
                 {formats.length > 0 && (
                   <>
-                    {' с форматом: '}
-                    <span className="font-medium">{formats.map(fmt => getFormatLabel(fmt)).join(', ')}</span>
+                    {t('projects.page.withFormat')}
+                    <span className="font-medium">{formats.map(fmt => getFormatLabel(fmt, t)).join(', ')}</span>
                   </>
                 )}
               </p>
@@ -140,7 +144,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
               <div className="relative flex-grow">
                 <input
                   type="text"
-                  placeholder="Поиск проектов..."
+                  placeholder={t('common.placeholders.searchProjects')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full py-3 sm:py-4 px-5 pl-12 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring focus:ring-primary-200 focus:ring-opacity-50 shadow-sm transition-all"
@@ -155,7 +159,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
                 whileTap={{ scale: 0.98 }}
               >
                 <FaFilter className="mr-2 text-primary-500" />
-                <span>{showFilters ? 'Скрыть фильтры' : 'Показать фильтры'}</span>
+                <span>{showFilters ? t('common.actions.hideFilters') : t('common.actions.showFilters')}</span>
               </motion.button>
             </div>
             
@@ -169,7 +173,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
                 transition={{ duration: 0.3 }}
               >
                 <div className="flex justify-between items-center mb-4 sm:mb-6">
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-800">Фильтры</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-800">{t('projects.page.filters')}</h3>
                   <button
                     onClick={() => setShowFilters(false)}
                     className="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100 transition-colors"
@@ -179,9 +183,9 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
                 </div>
                 
                 <div className="mb-4">
-                  <h4 className="font-medium text-gray-700 mb-3">Категории</h4>
+                  <h4 className="font-medium text-gray-700 mb-3">{t('projects.page.categories')}</h4>
                   <div className="flex flex-wrap gap-2 sm:gap-3">
-                    {['Люди', 'Животные', 'Природа', 'Дети', 'Экология'].map((tag) => (
+                    {[t('projects.tagMap.Люди'), t('projects.tagMap.Животные'), t('projects.tagMap.Природа'), t('projects.tagMap.Дети'), t('projects.tagMap.Экология')].map((tag) => (
                       <motion.button
                         key={tag}
                         onClick={() => handleTagSelect(tag)}
@@ -205,7 +209,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
             {/* Выбранные фильтры */}
             {selectedTags.length > 0 && (
               <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8 items-center">
-                <span className="text-xs sm:text-sm text-gray-500">Выбранные фильтры:</span>
+                <span className="text-xs sm:text-sm text-gray-500">{t('common.labels.selectedFilters')}</span>
                 {selectedTags.map(tag => (
                   <motion.button
                     key={tag}
@@ -225,7 +229,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Очистить все
+                  {t('common.actions.resetAll')}
                 </motion.button>
               </div>
             )}
@@ -280,7 +284,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
                     
                     <div className="mb-4 sm:mb-5">
                       <div className="flex justify-between text-xs sm:text-sm mb-2">
-                        <span className="text-gray-500">Собрано</span>
+                        <span className="text-gray-500">{t('common.labels.collected')}</span>
                         <span className="font-medium">{project.collected.toLocaleString()} ₽</span>
                       </div>
                       <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
@@ -290,7 +294,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
                         ></div>
                       </div>
                       <div className="flex justify-between text-xs sm:text-sm mt-2">
-                        <span className="text-gray-500">Цель: {project.goal.toLocaleString()} ₽</span>
+                        <span className="text-gray-500">{t('common.labels.goal')}: {project.goal.toLocaleString()} ₽</span>
                         <span className="font-medium text-primary-600">{Math.round((project.collected / project.goal) * 100)}%</span>
                       </div>
                     </div>
@@ -299,7 +303,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
                       href={`/project-details/${project.id}`}
                       className="block w-full py-2.5 sm:py-3 px-4 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white rounded-lg text-center font-medium transition-all shadow-sm hover:shadow text-sm sm:text-base"
                     >
-                      Выбрать проект
+                      {t('common.actions.selectProject')}
                     </Link>
                   </div>
                 </motion.div>
@@ -312,9 +316,9 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Проекты не найдены</h3>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">{t('projects.page.notFoundTitle')}</h3>
               <p className="text-gray-600 mb-8 max-w-lg mx-auto">
-                Попробуйте изменить параметры поиска или фильтры
+                {t('projects.page.notFoundText')}
               </p>
               <motion.button
                 onClick={() => {
@@ -325,7 +329,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
               >
-                Сбросить все фильтры
+                {t('common.actions.resetAll')}
               </motion.button>
             </motion.div>
           )}
